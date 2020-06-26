@@ -32,7 +32,6 @@ class SplunkDriver(DriverBase):
         self.verify: Optional[bool] = False
         self.service = None
         self._loaded = True
-        self._connected = False
         self._debug = kwargs.get("debug", False)
 
     def connect(self, **kwargs):
