@@ -32,6 +32,9 @@ class LocalDataDriver(DriverBase):
             Connection string (not used)
         data_paths : List[str], optional
             Paths from which to load data files
+        file_extensions : List[str], optional
+            File extensions from which to load data files
+            Default: pkl, csv, json
 
         """
         del connection_str
@@ -46,6 +49,12 @@ class LocalDataDriver(DriverBase):
         elif "LocalData" in settings:
             self._paths = settings.get("LocalData", {}).get("data_paths")
 
+        file_extensions = kwargs.get("file_extensions")
+        self._fileext: List[str] = ["pkl", "csv", "json"]
+        if file_extensions:
+            self._fileext = file_extensions
+        self._file_patterns = [f"**/*.{ext}" for ext in self._fileext]
+
         self.data_files: Dict[str, str] = self._get_data_paths()
         self._schema: Dict[str, Any] = {}
         self._loaded = True
@@ -55,7 +64,7 @@ class LocalDataDriver(DriverBase):
         """Read files in data paths."""
         data_files = {}
         for path in self._paths:
-            for pattern in ["**/*.pkl", "**/*.csv"]:
+            for pattern in self._file_patterns:
                 found_files = Path(path).resolve().glob(pattern)
                 data_files.update(
                     {
@@ -132,9 +141,19 @@ class LocalDataDriver(DriverBase):
                 f"Data file ({query}) for query {query_name} not found."
             )
         if file_path.endswith("csv"):
-            return pd.read_csv(
-                file_path, infer_datetime_format=True, parse_dates=["TimeGenerated"]
-            )
+            try:
+                return pd.read_csv(
+                    file_path, infer_datetime_format=True, parse_dates=["TimeGenerated"]
+                )
+            except ValueError as exc:
+                raise ValueError(f"Read error on file {file_path}: {exc}.") from exc
+        if file_path.endswith("json"):
+            # option for orient, others?
+            try:
+                return pd.read_json(file_path, lines=True)
+            except ValueError as exc:
+                raise ValueError(f"Read error on file {file_path}: {exc}.") from exc
+
         data_df = pd.read_pickle(file_path)
         if isinstance(data_df, pd.DataFrame):
             return data_df
