@@ -111,6 +111,4 @@ Other OpenObserve Documentation
 For examples of using the OpenObserve provider, see the sample
 `OpenObserve Notebook <https://github.com/microsoft/msticpy/blob/main/docs/notebooks/OpenObserve-DataConnector.ipynb>`
 
-Built-in :ref:`data_acquisition/DataQueries:Queries for OpenObserve`.
-
 :py:mod:`OpenObserve driver API documentation<msticpy.data.drivers.openobserve_driver>`
