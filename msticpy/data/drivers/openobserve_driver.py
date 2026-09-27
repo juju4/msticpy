@@ -204,8 +204,7 @@ class OpenObserveDriver(DriverBase):
 
         """
         del query_source
-        if not self._connected:
-            raise self._create_not_connected_err("OpenObserve")
+        self._ensure_connected()
 
         verbosity = kwargs.pop("verbosity", 0)
         timezone = kwargs.pop("timezone", "UTC")
@@ -445,6 +444,7 @@ class OpenObserveDriver(DriverBase):
             the underlying provider result if an error occurs.
 
         """
+        self._ensure_connected()
         df_streams = self.service.list_objects2df("streams")
         return df_streams
 
@@ -463,5 +463,6 @@ class OpenObserveDriver(DriverBase):
             the underlying provider result if an error occurs.
 
         """
+        self._ensure_connected()
         df_alerts = self.service.list_objects2df("alerts")
         return df_alerts
