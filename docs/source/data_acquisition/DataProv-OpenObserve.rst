@@ -65,7 +65,7 @@ an instance name when you call connect.
 
 .. code:: ipython3
 
-        qry_prov.connect(instance="Tenant2")
+        qry_prov.connect(instance="Instance2")
 
 Running a OpenObserve query
 -------------------------
@@ -83,7 +83,7 @@ through pipelines.
 
 .. code:: ipython3
 
-    df_streams = openobserve_prov.list_streams()
+    df_streams = qry_prov.list_streams()
     df_streams[df_streams['stream_type'] == 'logs'][['name']].head()
 
     query = """SELECT host_name as "host_name",
@@ -91,14 +91,14 @@ through pipelines.
        max(_timestamp) as "lastseen",
        count() as "count"
        FROM "journald"  GROUP BY host_name
-    """"
-    df = openobserve_prov.exec_query(query, days=1, verbosity=3)
+    """
+    df = qry_prov.exec_query(query, days=1, verbosity=3)
     df.head()
 
 .. code:: ipython3
 
-    query = """SELECT...
-    df = openobserve_prov.exec_query(
+    query = """SELECT..."""
+    df = qry_prov.exec_query(
         query,
         start=datetime.now() - timedelta(days=6.001),
         end=datetime.now() - timedelta(days=6)
@@ -109,7 +109,7 @@ Other OpenObserve Documentation
 -----------------------------
 
 For examples of using the OpenObserve provider, see the sample
-`OpenObserve Notebook <https://github.com/microsoft/msticpy/blob/master/docs/notebooks/OpenObserve-DataConnector.ipynb>`
+`OpenObserve Notebook <https://github.com/microsoft/msticpy/blob/main/docs/notebooks/OpenObserve-DataConnector.ipynb>`
 
 Built-in :ref:`data_acquisition/DataQueries:Queries for OpenObserve`.
 
