@@ -5,7 +5,7 @@ beautifulsoup4>=4.15.0
 coverage>=7.16.1
 docutils<0.22.0
 filelock>=3.29.1
-jsonschema>=4.17.3
+jsonschema>=4.26.0
 markdown>=3.3.4
 mypy>=2.3.0
 nbdime>=2.1.0
@@ -13,13 +13,13 @@ nbconvert>=6.1.0
 pandas>=1.4.0, <3.0.0
 pipreqs>=0.4.9
 pre-commit>=2.7.1
-pydocstyle>=6.0.0
+pydocstyle>=6.3.0
 pygeohash>=1.2.0
 pylint>=2.5.3
 pyroma>=5.0.1
 pytest-check>=1.0.1
 pytest-cov>=7.1.0
-pytest-env>=1.1.0
+pytest-env>=1.7.1
 pytest-xdist>=2.5.0
 pytest>=5.0.1
 readthedocs-sphinx-ext==2.2.5
